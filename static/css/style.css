@@ -1,0 +1,212 @@
+body {
+    font-family: 'Noto Sans KR', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+header {
+    background-color: #15304c;
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header img {
+    height: 60px;
+    margin-right: 15px;
+
+    filter: none;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #15304c;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+    border-color: #1f4d7a;
+    outline: none;
+}
+
+button {
+    margin-top: 20px;
+    background-color: #1f4d7a;
+    color: white;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #15304c;
+}
+
+button.approve {
+    background-color: #28a745;
+    position: relative;
+    padding-left: 36px;
+}
+
+button.approve:hover {
+    background-color: #218838;
+}
+
+button.approve::before {
+    content: "✔";
+    position: absolute;
+    left: 12px;
+    font-size: 18px;
+}
+
+button.reject {
+    background-color: #dc3545;
+    position: relative;
+    padding-left: 36px;
+}
+
+button.reject:hover {
+    background-color: #b02a37;
+}
+
+button.reject::before {
+    content: "✖";
+    position: absolute;
+    left: 12px;
+    font-size: 18px;
+}
+
+.status-card {
+    max-width: 600px;
+    margin: 30px auto;
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fafafa;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+}
+
+.status-approved {
+    border-color: #2a7d2a;
+    background-color: #e9f8e9;
+    color: #1c5e1c;
+}
+.status-approved::before {
+    content: "✔";
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    color: #2a7d2a;
+}
+
+.status-rejected {
+    border-color: #b92c2c;
+    background-color: #fdeaea;
+    color: #8c1c1c;
+}
+.status-rejected::before {
+    content: "✖";
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    color: #b92c2c;
+}
+
+.status-judging {
+    border-color: #6c757d;
+    background-color: #f1f1f1;
+    color: #555;
+}
+.status-judging::before {
+    content: "⏳";
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    color: #6c757d;
+}
+
+.probability-container {
+    margin-top: 20px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    height: 30px;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.probability-bar {
+    height: 100%;
+    width: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #1f4d7a;
+    transition: width 0.8s ease-in-out, background-color 0.5s;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.table-container th {
+    background-color: #15304c;
+    color: white;
+}

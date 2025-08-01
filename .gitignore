@@ -1,0 +1,5 @@
+db.sqlite3
+models/
+__pycache__/
+*.pyc
+locale/*/django.mo

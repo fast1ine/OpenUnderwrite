@@ -1,0 +1,61 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Open System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <img src="{% static 'logo.png' %}" alt="Bank Logo">
+    <h1>Open System</h1>
+    <!-- 언어 전환 -->
+    <div class="lang-select">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="ko" {% if request.LANGUAGE_CODE == 'ko' %}selected{% endif %}>한국어</option>
+                <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+            </select>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <h2>{% trans "고객 신청 현황" %}</h2>
+
+    {% if not model_trained %}
+        <p class="alert">{% trans "설정에서 CSV 학습을 먼저 진행하십시오." %}</p>
+        <a href="{% url 'admin_settings' %}" class="button">{% trans "설정으로 이동" %}</a>
+
+    {% elif loans|length == 0 %}
+        <p class="info">{% trans "현재 처리할 대출 신청이 없습니다." %}</p>
+
+    {% else %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{% trans "확인용 암호" %}</th>
+                        <th>{% trans "고객명" %}</th>
+                        <th>{% trans "금액" %}</th>
+                        <th>{% trans "날짜" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in loans %}
+                    <tr onclick="window.location.href='{% url 'admin_status_detail' loan.verification_passkey %}';">
+                        <td>{{ loan.verification_passkey }}</td>
+                        <td>{{ loan.first_name }} {{ loan.last_name }}</td>
+                        <td>{{ loan.loan_amount|floatformat:2 }}</td>
+                        <td>{{ loan.request_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

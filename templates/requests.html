@@ -1,0 +1,132 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenUnderwrite</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <img src="{% static 'logo.png' %}" alt="Bank Logo">
+    <h1>OpenUnderwrite Loan</h1>
+
+    <div class="lang-select">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="ko" {% if request.LANGUAGE_CODE == 'ko' %}selected{% endif %}>한국어</option>
+                <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+            </select>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    <form action="{% url 'submit_loan_request' %}" method="post">
+        {% csrf_token %}
+
+        <label>{% trans "날짜" %}</label>
+        <input type="text" name="request_date"
+               value="{{ now|date:'Y-m-d' }}"
+               readonly>
+
+        <label>{% trans "이자율 (%)" %}</label>
+        <input type="number" name="interest_rate"
+               step="0.01"
+               value="{{ interest_rate|floatformat:2 }}"
+               readonly>
+
+        <label>{% trans "이름" %}</label>
+        <input type="text" name="first_name" required>
+
+        <label>{% trans "성" %}</label>
+        <input type="text" name="last_name" required>
+
+        <label>{% trans "생년월일" %}</label>
+        <select name="dob_year">{% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>년
+        <select name="dob_month">{% for m in months %}<option value="{{ m }}">{{ m }}</option>{% endfor %}</select>월
+        <select name="dob_day">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>일
+
+        <label>{% trans "수입" %}</label>
+        <input type="number" name="income" step="0.01">
+
+        <label>{% trans "대출 금액" %}</label>
+        <input type="number" name="loan_amount" step="0.01">
+
+        <label>{% trans "신용 점수" %}</label>
+        <input type="number" name="credit_score">
+
+        <label>{% trans "재직 기간" %}</label>
+        <input type="number" name="months_employed_year" min="0"> {% trans "년" %}
+        <input type="number" name="months_employed_month" min="0"> {% trans "개월" %}
+
+        <label>{% trans "신용계좌개수" %}</label>
+        <input type="number" name="num_credit_lines" min="0">
+
+        <label>{% trans "연소득" %}</label>
+        <input type="number" name="annual_income" step="0.01">
+
+        <label>{% trans "타금융기관 대출금현황" %}</label>
+        <label><input type="radio" name="other_loans" value="Yes"> {% trans "예" %}</label>
+        <label><input type="radio" name="other_loans" value="No" checked> {% trans "아니오" %}</label>
+
+        <label>{% trans "총 대출 금액" %}</label>
+        <input type="number" name="total_loan_amount" step="0.01">
+
+        <label>{% trans "담보 대출 현황" %}</label>
+        <label><input type="radio" name="has_mortgage" value="Yes"> {% trans "예" %}</label>
+        <label><input type="radio" name="has_mortgage" value="No" checked> {% trans "아니오" %}</label>
+
+        <label>{% trans "총 담보 대출 금액" %}</label>
+        <input type="number" name="total_mortgage_amount" step="0.01">
+
+        <label>{% trans "학력" %}</label>
+        <select name="education">
+            <option value="High School">{% trans "고등학교" %}</option>
+            <option value="Bachelor's">{% trans "학사" %}</option>
+            <option value="Master's">{% trans "석사" %}</option>
+            <option value="PhD">{% trans "박사" %}</option>
+        </select>
+
+        <label>{% trans "고용 형태" %}</label>
+        <select name="employment_type">
+            <option value="Full-Time">{% trans "정규직" %}</option>
+            <option value="Part-Time">{% trans "비정규직" %}</option>
+            <option value="Self-Employed">{% trans "자영업" %}</option>
+            <option value="Unemployed">{% trans "무직" %}</option>
+        </select>
+
+        <label>{% trans "혼인 여부" %}</label>
+        <select name="marital_status">
+            <option value="Married">{% trans "기혼" %}</option>
+            <option value="Divorced">{% trans "이혼" %}</option>
+            <option value="Single">{% trans "미혼" %}</option>
+        </select>
+
+        <label>{% trans "부양 가족 여부" %}</label>
+        <label><input type="radio" name="has_dependents" value="Yes"> {% trans "예" %}</label>
+        <label><input type="radio" name="has_dependents" value="No" checked> {% trans "아니오" %}</label>
+
+        <label>{% trans "대출 목적" %}</label>
+        <select name="loan_purpose">
+            <option value="Auto">{% trans "차량구입" %}</option>
+            <option value="Business">{% trans "사업자금" %}</option>
+            <option value="Education">{% trans "학자금" %}</option>
+            <option value="Home">{% trans "주택/임차" %}</option>
+            <option value="Other">{% trans "기타" %}</option>
+        </select>
+
+        <label>{% trans "담보구분" %}</label>
+        <label><input type="radio" name="has_cosigner" value="Yes"> {% trans "보증인" %}</label>
+        <label><input type="radio" name="has_cosigner" value="No" checked> {% trans "신용" %}</label>
+
+        <button type="submit">{% trans "제출" %}</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenUnderwrite</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="header--blue">
+    <div class="header__inner">
+        <img src="{% static 'logo.png' %}" alt="HSSHB Bank Logo" class="logo">
+        <h1 class="header__title">Open System</h1>
+        <div class="lang-select">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <select name="language" onchange="this.form.submit()">
+                    <option value="ko" {% if request.LANGUAGE_CODE == 'ko' %}selected{% endif %}>한국어</option>
+                    <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    {% if not loan %}
+        <h2 class="mt-40">{% trans "대출 진행 현황 조회" %}</h2>
+        {% if error %}
+            <p class="alert">{{ error }}</p>
+        {% endif %}
+        <form action="{% url 'loan_status' %}" method="post" class="form--inline">
+            {% csrf_token %}
+            <input type="text" name="passkey" placeholder="{% trans '확인용 암호 입력' %}" required>
+            <button type="submit" class="button button--navy">{% trans "조회" %}</button>
+        </form>
+    {% else %}
+        <h2 class="mt-40">{% trans "신청 내역" %}</h2>
+        <div class="card">
+            <table class="details-table">
+                <tr><th>{% trans "확인용 암호" %}</th><td>{{ loan.verification_passkey }}</td></tr>
+                <tr><th>{% trans "고객명" %}</th><td>{{ loan.first_name }} {{ loan.last_name }}</td></tr>
+                <tr><th>{% trans "생년월일" %}</th><td>{{ loan.dob }}</td></tr>
+                <tr><th>{% trans "연령" %}</th><td>{{ loan.age }}</td></tr>
+                <tr><th>{% trans "연소득" %}</th><td>{{ loan.annual_income|floatformat:2 }}</td></tr>
+                <tr><th>{% trans "대출 금액" %}</th><td>{{ loan.loan_amount|floatformat:2 }}</td></tr>
+                <tr><th>{% trans "이자율" %}</th><td>{{ loan.interest_rate|floatformat:2 }}%</td></tr>
+                <tr><th>{% trans "학력" %}</th><td>{% trans loan.education %}</td></tr>
+                <tr><th>{% trans "고용 형태" %}</th><td>{% trans loan.employment_type %}</td></tr>
+                <tr><th>{% trans "혼인 여부" %}</th><td>{% trans loan.marital_status %}</td></tr>
+                <tr><th>{% trans "부양 가족 여부" %}</th><td>{% if loan.has_dependents %}{% trans "예" %}{% else %}{% trans "아니오" %}{% endif %}</td></tr>
+                <tr><th>{% trans "대출 목적" %}</th><td>{% trans loan.loan_purpose %}</td></tr>
+            </table>
+
+            <div class="status-badge status-{{ loan.status|lower }}">
+                {% if loan.status == "Approved" %}
+                    <span>✔ {% trans "승인됨" %}</span>
+                {% elif loan.status == "Rejected" %}
+                    <span>✖ {% trans "반려됨" %}</span>
+                {% else %}
+                    <span>⏳ {% trans "심사중" %}</span>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

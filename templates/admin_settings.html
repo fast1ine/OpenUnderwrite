@@ -1,0 +1,33 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+  <meta charset="UTF-8">
+  <title>Open System</title>
+  {% load static %}<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header><h1>Open System - {% trans "설정" %}</h1></header>
+  <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      <label>{% trans "금리 (%)" %}</label>
+      <input type="number" name="interest_rate" step="0.01"
+             value="{{ settings.interest_rate|default:5.00|floatformat:2 }}">
+      <button type="submit" name="save_rate">{% trans "금리 값 저장" %}</button>
+    </form>
+    <hr>
+    <form action="{% url 'train_model' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label>{% trans "이전 기록 (.csv)" %}</label>
+      <input type="file" name="file" accept=".csv">
+      <button type="submit">{% trans "분석" %}</button>
+    </form>
+    {% if inspect_done %}
+      <p style="color:green;">
+        {% trans "분석 완료!" %} (Accuracy: {{ accuracy|default:"-"|floatformat:2 }})
+      </p>
+    {% endif %}
+  </div>
+</body>
+</html>

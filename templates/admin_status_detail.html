@@ -1,0 +1,138 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Open System - {% trans "신청서 상세" %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+      .detail-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      .status-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .status-approved   { background-color: #d4edda; color: #155724; }
+      .status-rejected   { background-color: #f8d7da; color: #721c24; }
+      .status-judging    { background-color: #e2e3e5; color: #6c757d; }
+      .status-approved::before { content: "\2714"; margin-right: 6px; }   /* ✔️ */
+      .status-rejected::before { content: "\2716"; margin-right: 6px; }   /* ❌ */
+      .status-judging::before  { content: "\25A0"; margin-right: 6px; }   /* ■ */
+
+      .field-list { list-style: none; padding: 0; margin: 0 0 20px; }
+      .field-list li { margin: 8px 0; }
+
+      .gauge-container {
+        position: relative;
+        background: #e2e3e5;
+        border-radius: 4px;
+        overflow: hidden;
+        height: 28px;
+        margin-bottom: 20px;
+      }
+      .gauge-bar {
+        background: #007bff;
+        height: 100%;
+        width: {{ probability|default:0 }}%;
+        transition: width 0.45s ease-out;
+      }
+      .gauge-label {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .btn-approve { background: #28a745; color: #fff; }
+      .btn-reject  { background: #dc3545; color: #fff; }
+      .btn-back    { background: #6c757d; color: #fff; }
+
+      .lang-select { float: right; }
+      .lang-select select { padding: 4px; }
+    </style>
+</head>
+<body>
+  <header style="padding: 10px 20px; border-bottom: 1px solid #ccc;">
+    <img src="{% static 'logo.png' %}" alt="Bank Logo" style="height:40px; vertical-align:middle;">
+    <h1 style="display:inline-block; margin-left:10px;">HSSHB Nexus</h1>
+
+    <div class="lang-select">
+      <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <select name="language" onchange="this.form.submit()">
+          <option value="ko" {% if request.LANGUAGE_CODE == 'ko' %}selected{% endif %}>한국어</option>
+          <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+        </select>
+      </form>
+    </div>
+  </header>
+
+  <div class="detail-container">
+    <div class="status-label
+      {% if loan.status == 'Approved' %}status-approved
+      {% elif loan.status == 'Rejected' %}status-rejected
+      {% else %}status-judging{% endif %}">
+      {% trans loan.status %}
+    </div>
+
+    <ul class="field-list">
+      <li><strong>{% trans "고객명" %}:</strong> {{ loan.first_name }} {{ loan.last_name }}</li>
+      <li><strong>{% trans "생년월일" %}:</strong> {{ loan.dob }}</li>
+      <li><strong>{% trans "나이" %}:</strong> {{ loan.age }}</li>
+      <li><strong>{% trans "수입" %}:</strong> {{ loan.income|floatformat:2 }}</li>
+      <li><strong>{% trans "대출금액" %}:</strong> {{ loan.loan_amount|floatformat:2 }}</li>
+      <li><strong>{% trans "신용점수" %}:</strong> {{ loan.credit_score }}</li>
+      <li><strong>{% trans "재직기간(개월)" %}:</strong> {{ loan.months_employed }}</li>
+      <li><strong>{% trans "DTI 비율" %}:</strong> {{ loan.dti_ratio|floatformat:2 }}</li>
+      <li><strong>{% trans "학력" %}:</strong> {{ loan.education }}</li>
+      <li><strong>{% trans "고용 형태" %}:</strong> {{ loan.employment_type }}</li>
+      <li><strong>{% trans "혼인 여부" %}:</strong> {{ loan.marital_status }}</li>
+      <li><strong>{% trans "부양가족" %}:</strong> {{ loan.has_dependents|yesno:_("예,아니오") }}</li>
+      <li><strong>{% trans "담보대출" %}:</strong> {{ loan.has_mortgage|yesno:_("예,아니오") }}</li>
+      <li><strong>{% trans "보증인" %}:</strong> {{ loan.has_cosigner|yesno:_("예,아니오") }}</li>
+      <li><strong>{% trans "대출 목적" %}:</strong> {{ loan.loan_purpose }}</li>
+    </ul>
+
+    <h3>{% trans "채무 이행 확률" %}</h3>
+    <div class="gauge-container">
+      <div class="gauge-bar" style="width: {{ probability|floatformat:2 }}%;"></div>
+      <span class="gauge-label">
+        {{ probability|floatformat:2 }}%
+      </span>
+    </div>
+
+    <form method="post" style="margin-bottom: 15px;">
+      {% csrf_token %}
+      <button type="submit" name="action" value="approve" class="btn btn-approve">
+        {% trans "승인" %}
+      </button>
+      <button type="submit" name="action" value="reject" class="btn btn-reject">
+        {% trans "반려" %}
+      </button>
+    </form>
+    
+    <button onclick="location.href='{% url 'admin_status' %}'" class="btn btn-back">
+      {% trans "뒤로가기" %}
+    </button>
+  </div>
+</body>
+</html>

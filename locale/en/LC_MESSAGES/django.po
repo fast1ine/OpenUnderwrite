@@ -1,0 +1,185 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenUnderwrite\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-31 12:00+0000\n"
+"PO-Revision-Date: 2024-07-31 12:00+0000\n"
+"Last-Translator: fastline <fast1ine@naver.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "대출 신청 페이지"
+msgstr "Loan Application Page"
+
+msgid "이름"
+msgstr "First Name"
+
+msgid "성"
+msgstr "Last Name"
+
+msgid "생년월일"
+msgstr "Date of Birth"
+
+msgid "수입"
+msgstr "Income"
+
+msgid "대출 금액"
+msgstr "Loan Amount"
+
+msgid "신용 점수"
+msgstr "Credit Score"
+
+msgid "재직 기간"
+msgstr "Employment Period"
+
+msgid "신용계좌개수"
+msgstr "Number of Credit Lines"
+
+msgid "연소득"
+msgstr "Annual Income"
+
+msgid "타금융기관 대출금현황"
+msgstr "Loan Status from Other Financial Institutions"
+
+msgid "총 대출 금액"
+msgstr "Total Loan Amount"
+
+msgid "담보 대출 현황"
+msgstr "Mortgage Loan Status"
+
+msgid "담보 대출 금액"
+msgstr "Mortgage Loan Amount"
+
+msgid "학력"
+msgstr "Education"
+
+msgid "고용 형태"
+msgstr "Employment Type"
+
+msgid "혼인 여부"
+msgstr "Marital Status"
+
+msgid "부양 가족 여부"
+msgstr "Dependent Status"
+
+msgid "대출 목적"
+msgstr "Loan Purpose"
+
+msgid "담보구분"
+msgstr "Collateral Classification"
+
+msgid "제출"
+msgstr "Submit"
+
+msgid "예"
+msgstr "Yes"
+
+msgid "아니오"
+msgstr "No"
+
+msgid "보증인"
+msgstr "Co-Signer"
+
+msgid "신용"
+msgstr "Credit"
+
+# 옵션 항목들
+msgid "고등학교"
+msgstr "High School"
+
+msgid "학사"
+msgstr "Bachelor's"
+
+msgid "석사"
+msgstr "Master's"
+
+msgid "박사"
+msgstr "PhD"
+
+msgid "정규직"
+msgstr "Full-Time"
+
+msgid "비정규직"
+msgstr "Part-Time"
+
+msgid "자영업"
+msgstr "Self-Employed"
+
+msgid "무직"
+msgstr "Unemployed"
+
+msgid "기혼"
+msgstr "Married"
+
+msgid "이혼"
+msgstr "Divorced"
+
+msgid "미혼"
+msgstr "Single"
+
+msgid "차량구입"
+msgstr "Auto"
+
+msgid "사업자금"
+msgstr "Business"
+
+msgid "학자금"
+msgstr "Education"
+
+msgid "주택/임차"
+msgstr "Home"
+
+msgid "기타"
+msgstr "Other"
+
+# 관리자/상태 관련
+msgid "대출 신청"
+msgstr "Loan Request"
+
+msgid "대출 진행 현황"
+msgstr "Loan Status"
+
+msgid "상태 조회"
+msgstr "Check Status"
+
+msgid "확인용 암호"
+msgstr "Customer Verification Passkey"
+
+msgid "조회"
+msgstr "Check"
+
+msgid "상태"
+msgstr "Status"
+
+msgid "인쇄"
+msgstr "Print"
+
+msgid "신청 취소"
+msgstr "Cancel"
+
+msgid "고객 신청 현황"
+msgstr "Customer Applications"
+
+msgid "설정으로 이동"
+msgstr "Go to Settings"
+
+msgid "설정"
+msgstr "Settings"
+
+msgid "금리"
+msgstr "Interest Rate"
+
+msgid "금리 값 저장"
+msgstr "Save Rate"
+
+msgid "분석"
+msgstr "Inspect"
+
+msgid "분석 완료!"
+msgstr "Inspect Finished!"
+
+msgid "설정에서 이전 기록 (.csv) 학습과 금리 설정을 진행해 주십시오 !"
+msgstr "Please proceed with learning previous records (.csv) and setting interest rates in Settings!"
